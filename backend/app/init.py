@@ -39,13 +39,15 @@ def load_images(page):
     start = limit["start"]
     end = limit["end"]
     images = IMAGES[start:end + 1]
+    response = {"page": page}
     payload = []
     for img in images:
         file_name = img.split("/")[-1]
         encoded_img = get_response_image(img)
         payload.append({"name": file_name, "image": encoded_img})
 
-    return jsonify(payload)
+    response["payload"] = payload
+    return jsonify(response)
 
 
 def create_list(r1, r2):

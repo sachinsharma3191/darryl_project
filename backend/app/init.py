@@ -39,13 +39,13 @@ def load_images(page):
     start = limit["start"]
     end = limit["end"]
     images = IMAGES[start:end]
-    payload = {}
+    payload = []
     for img in images:
         file_name = img.split("/")[-1]
         encoded_img = get_response_image(img)
-        payload[file_name] = {"name": file_name, "data": encoded_img}
+        payload.append({"name": file_name, "image": encoded_img})
 
-    return payload
+    return jsonify(payload)
 
 
 def create_app(test_config=None):

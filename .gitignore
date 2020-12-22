@@ -4,6 +4,3 @@ images.zip
 .idea/
 .DS_Store
 images/
-frontend/.eslintcache
-frontend/node_modules
-frontend/package-lock.json

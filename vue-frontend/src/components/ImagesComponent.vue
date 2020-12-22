@@ -8,10 +8,6 @@
     </div>
    <div v-else>
       <div class="images">
-        <div>
-          <v-btn v-if="pageNumber > 1" elevation="2" @click="onPreviousPageHandler">Previous</v-btn>
-          <v-btn elevation="2" @click="onNextPageHandler">Next</v-btn>
-        </div>
           <v-card v-for="(image,key,index) in images" :key="index">
             <div>
               <input type="checkbox" :id="image.id" :name="image.name"

@@ -10,13 +10,13 @@ DIR_NAME = "../images/dataset/*.png"
 IMAGES = glob.glob(DIR_NAME)
 
 # Total Images
-TOTAL_IMAGES = 15000
+TOTAL_IMAGES = 1500
 # SIZE OF PAGINATION PER PAGE
 SIZE = 10
 # TOTAL PAGES
-TOTAL_PAGES = int(TOTAL_IMAGES / SIZE) + 1
+TOTAL_PAGES = int(TOTAL_IMAGES / SIZE)
 # CACHE HOLDING START AND END LIMIT
-PAGINATION_CACHE = {1: {"start": 0, "end": 9}}
+PAGINATION_CACHE = {1: {"start": 0, "end": SIZE - 1}}
 
 
 def get_response_image(image_path):
@@ -38,7 +38,7 @@ def load_images(page):
     limit = PAGINATION_CACHE[page]
     start = limit["start"]
     end = limit["end"]
-    images = IMAGES[start:end]
+    images = IMAGES[start:end + 1]
     payload = []
     for img in images:
         file_name = img.split("/")[-1]
@@ -46,6 +46,10 @@ def load_images(page):
         payload.append({"name": file_name, "image": encoded_img})
 
     return jsonify(payload)
+
+
+def create_list(r1, r2):
+    return list(range(r1, r2 + 1))
 
 
 def create_app(test_config=None):
@@ -63,5 +67,9 @@ def create_app(test_config=None):
         except Exception as e:
             print(e)
             return "An occur occured while processing request", 500
+
+    @app.route("/image/total_pages", methods=['GET'])
+    def cal_size():
+        return jsonify({"total_pages": create_list(1, TOTAL_PAGES)})
 
     return app
